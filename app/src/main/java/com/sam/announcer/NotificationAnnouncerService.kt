@@ -68,11 +68,10 @@ class NotificationAnnouncerService : NotificationListenerService(), TextToSpeech
         if (!prefs.enabled || !ttsReady) return
         if (sbn.packageName == packageName) return
         if (sbn.isOngoing) return
-        if ((sbn.notification.flags and Notification.FLAG_GROUP_SUMMARY) != 0) return
 
         val now = System.currentTimeMillis()
         val last = lastSpoken[sbn.packageName] ?: 0L
-        if (now - last < 3000) return
+        if (now - last < 1000) return
         lastSpoken[sbn.packageName] = now
 
         tts?.speak(
